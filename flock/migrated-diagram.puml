@@ -1,0 +1,56 @@
+@startuml
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide empty members
+class C0 as ":CircularEconomyNetwork\nname = GreenLoop\n" {
+}
+class C1 as ":Component\nidentifier = C-301\nname = Motor\nrecycled = false\nlifecycleState = ASSEMBLED\n" {
+}
+class C2 as ":Component\nidentifier = C-300\nname = Gearbox\nrecycled = true\nlifecycleState = IN_LOOP\n" {
+}
+class C3 as ":Customer\nname = Bob\nloyaltyTier = BASIC\n" {
+}
+class C4 as ":Customer\nname = Alice\nloyaltyTier = PREMIUM\n" {
+}
+class C5 as ":DistributionPartner\nname = RetailerOne\nomniChannel = true\n" {
+}
+class C6 as ":Facility\nname = RepairHubA\noperationalSince = 10-12-1999\n" {
+}
+class C7 as ":Facility\nname = RecycleCenter1\noperationalSince = 10-12-1999\n" {
+}
+class C8 as ":FacilityProfile\ncategory = REPAIR\nmaxThroughputPerMonth = 10\n" {
+}
+class C9 as ":FacilityProfile\ncategory = REPAIR\nmaxThroughputPerMonth = 10\n" {
+}
+class C10 as ":Producer\nname = AcmeCorp\nproductionCapacity = 0.0\n" {
+}
+class C11 as ":Product\nid = P-300\nname = Gadget\nbasePrice = 149.99\nassemblyDate = Wed Nov 20 00:00:00 CET 2024\n" {
+}
+class C12 as ":PurchaseOrder\nid = Alice-O1\ndate = Sun Nov 30 00:00:00 CET 2025\n" {
+}
+class C13 as ":SustainabilityMetric\nname = ImproveReuse\ndescription = Increase reuse rate\nthreshold = 20.0\ncomparator = MAX\nunit = wpm\n" {
+}
+class C14 as ":SustainabilityMetric\nname = ReduceWaste\ndescription = Minimise waste in process\nthreshold = 10.0\ncomparator = MIN\nunit = ppm\n" {
+}
+C0 --> C10 : actors
+C10 --> C2 : components
+C10 --> C1 : components
+C0 --> C5 : actors
+C0 --> C4 : actors
+C4 --> C12 : orders
+C0 --> C3 : actors
+C0 --> C14 : metrics
+C0 --> C13 : metrics
+C0 --> C7 : facilities
+C7 --> C9 : profile
+C0 --> C6 : facilities
+C6 --> C8 : profile
+C0 --> C11 : products
+C6 ..> C13 : metrics
+C12 ..> C11 : product
+C7 ..> C14 : metrics
+C7 ..> C13 : metrics
+C11 ..> C5 : retailer
+C11 ..> C2 : parts
+C11 ..> C1 : parts
+@enduml

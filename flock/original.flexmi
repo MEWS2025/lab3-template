@@ -1,0 +1,44 @@
+<?nsuri ce?>
+<CircularEconomy name="GreenLoop">
+
+  <sustainabilitygoal
+      name="ReduceWaste"
+      description="Minimise waste in process"
+      standard="10.0"
+      comparator="MIN"/>
+  <sustainabilitygoal
+      name="ImproveReuse"
+      description="Increase reuse rate"
+      standard="20.0"
+      comparator="MAX"/>
+
+  <facility name="RecycleCenter1" type="RECYCLE" goals="ReduceWaste, ImproveReuse"/>
+  <facility name="RefurbWien" type="REFURBISH" goals="ImproveReuse"/>
+  <facility name="RepairHubA" type="REPAIR" goals="ImproveReuse"/>
+
+  <manufacturer name="AcmeCorp">
+    <component id="C-300" componentName="Gearbox" recycled="true" componentState="IN_CIRCULAR_PROCESS"/>
+    <component id="C-301" componentName="Motor"   recycled="false" componentState="ASSEMBLED"/>
+  </manufacturer>
+
+  <product id="P-300" productName="Gadget" price="149.99" assemblyDate="2024-11-20" component="C-300, C-301" retailer="RetailerOne"/>
+  <retailer name="RetailerOne"/>
+
+  <consumer name="Alice">
+    <orders id="Alice-O1" date="2025-11-30" product="P-300"/>
+    <return id="Alice-R1" date="2025-12-06" reason="Bad Quality" order="Alice-O1">
+        <recycleprocess facility="RecycleCenter1" energySavedKWh="65.0" waterSavedL="845">
+            <shipment id="A-R1-Recyc" deliveryDate="2025-12-31" delivered="false" co2Emission="35" destination="AcmeCorp" components="C-300, C-301"/>
+        </recycleprocess>
+
+        <refurbishprocess facility="RefurbWien" energySavedKWh="65.0" waterSavedL="845">
+            <shipment id="A-R1-Refurb" deliveryDate="2025-12-13" delivered="true" co2Emission="35" destination="RetailerOne"/>
+        </refurbishprocess>
+
+        <repairprocess facility="RepairWien" energySavedKWh="65.0" waterSavedL="845">
+            <shipment id="A-R1-Repair" deliveryDate="2025-12-13" delivered="true" co2Emission="35" destination="Alice"/>
+        </repairprocess>
+    </return>
+  </consumer>
+  <consumer name="Bob"/>
+</CircularEconomy>

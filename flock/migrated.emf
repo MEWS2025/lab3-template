@@ -1,0 +1,104 @@
+@namespace(uri="ce", prefix="")
+
+package ce;
+
+// --- Enums ---
+enum Comparator { MIN=0; MAX=1; }
+enum FacilityType { REPAIR=0; REFURBISH=1; RECYCLE=2; }
+enum ComponentState { READY=0; ASSEMBLED=1; IN_CIRCULAR_PROCESS=2; }
+
+
+// --- Root container ---
+class CircularEconomy {
+    attr String       name;
+    val  Manufacturer[*]      manufacturer;
+    val  Retailer[*]          retailer;
+    val  Consumer[*]          consumer;
+    val  SustainabilityGoal[*] sustainabilitygoal;
+    val  Facility[*]          facility;
+    val  Product[*]           product;
+}
+
+abstract class Actor {
+    attr String name;
+}
+
+class Manufacturer extends Actor {
+    val Component[*] component;
+}
+
+class Retailer extends Actor { }
+
+class Consumer extends Actor {
+    val Order[*]  orders;
+    val Return[*] returns;
+}
+
+class SustainabilityGoal {
+    attr String     name;
+    attr String[0..1]  description;
+    attr float      standard;
+
+    attr Comparator comparator;
+}
+
+class Facility {
+    attr String       name;
+    ref  SustainabilityGoal[*] goals;
+
+    attr FacilityType type;
+}
+
+class Product {
+    id attr String ~id;
+    attr String productName;
+    attr float  price;
+    attr Date   assemblyDate;
+    ref  Retailer retailer;
+    ref  Component[1..*] components;
+}
+
+class Order {
+    id attr String ~id;
+    attr Date   date;
+    ref  Product product;
+}
+
+class Component {
+    id attr String ~id;
+    attr String componentName;
+    attr boolean recycled;
+    attr ComponentState componentState;
+}
+
+class Return {
+    id attr String ~id;
+    attr Date date;
+    attr String reason;
+    ref  Order order;
+    val  CircularProcess[*] circularprocesses;
+}
+
+abstract class CircularProcess {
+    ref  Facility facility;
+    val  Shipment[0..1] shipment;
+    attr float energySavedKWh;
+    attr float waterSavedL;
+}
+
+class Shipment {
+    id attr String  ~id;
+    attr boolean delivered;
+    attr Date    deliveryDate;
+    attr float   co2Emission;
+    ref  Actor destination;
+}
+
+
+class RepairProcess extends CircularProcess { }
+class RefurbishProcess extends CircularProcess { }
+
+class RecycleProcess extends CircularProcess {
+    ref Component[*] components;
+}
+

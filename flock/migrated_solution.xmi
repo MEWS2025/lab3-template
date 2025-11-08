@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ASCII"?>
+<CircularEconomyNetwork xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="ce" xsi:schemaLocation="ce migrated.emf" name="GreenLoop">
+  <actors xsi:type="Producer" name="AcmeCorp">
+    <components identifier="C-300" name="Gearbox" recycled="true" lifecycleState="IN_LOOP"/>
+    <components identifier="C-301" name="Motor" lifecycleState="ASSEMBLED"/>
+  </actors>
+  <actors xsi:type="DistributionPartner" name="RetailerOne" omniChannel="true"/>
+  <actors xsi:type="Customer" name="Alice" loyaltyTier="PREMIUM">
+    <orders id="Alice-O1" date="2025-11-30T00:00:00.000+0100" product="P-300"/>
+  </actors>
+  <actors xsi:type="Customer" name="Bob"/>
+  <metrics name="ReduceWaste" description="Minimise waste in process" threshold="10.0" unit="ppm"/>
+  <metrics name="ImproveReuse" description="Increase reuse rate" threshold="20.0" comparator="MAX" unit="wpm"/>
+  <facilities name="RecycleCenter1" metrics="//@metrics.0 //@metrics.1" operationalSince="10-12-1999">
+    <profile maxThroughputPerMonth="10"/>
+  </facilities>
+  <facilities name="RepairHubA" metrics="//@metrics.1" operationalSince="10-12-1999">
+    <profile maxThroughputPerMonth="10"/>
+  </facilities>
+  <products id="P-300" name="Gadget" basePrice="149.99" assemblyDate="2024-11-20T00:00:00.000+0100" retailer="//@actors.1" parts="C-300 C-301"/>
+</CircularEconomyNetwork>
