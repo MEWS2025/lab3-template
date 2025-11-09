@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sustainabilityReport:Report xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sustainabilityReport="http://www.example.org/sustainabilityReport" xsi:schemaLocation="http://www.example.org/sustainabilityReport target.emf" name="ViennaCircularEconomy" generatedOn="Sun Nov 09 12:55:00 CET 2025" version="v1.0" totalCO2="63.0">
+  <facilities facilityReportId="FR_1" facilityName="ViennaElectronicsRecycleFacility (RECYCLE)" co2="29.0" energySavedKWh="25.0" waterSavedL="500.0" shipmentsTotal="2" shipmentsDelivered="1" shipmentsNotDelivered="1">
+    <goals goalName="SDG_EnergySaved" standard="30.0" comparator="MIN" actual="25.0"/>
+    <goals goalName="SDG_CO2Emission" standard="150.0" comparator="MAX" actual="29.0" isCompliant="true"/>
+  </facilities>
+  <facilities facilityReportId="FR_2" facilityName="StadtWienBikeRepairShop (REPAIR)" co2="22.0" energySavedKWh="25.0" waterSavedL="500.0" shipmentsTotal="1" shipmentsDelivered="1">
+    <goals goalName="SDG_WaterSaved" standard="300.0" comparator="MIN" actual="500.0" isCompliant="true"/>
+    <goals goalName="SDG_CO2Emission" standard="150.0" comparator="MAX" actual="22.0" isCompliant="true"/>
+  </facilities>
+  <facilities facilityReportId="FR_3" facilityName="ViennaRefurbishmentCenter (REFURBISH)" co2="12.0" energySavedKWh="18.75" waterSavedL="260.0" shipmentsTotal="1" shipmentsDelivered="1">
+    <goals goalName="SDG_EnergySaved" standard="30.0" comparator="MIN" actual="18.75"/>
+    <goals goalName="SDG_WaterSaved" standard="300.0" comparator="MIN" actual="260.0"/>
+    <goals goalName="SDG_CO2Emission" standard="150.0" comparator="MAX" actual="12.0" isCompliant="true"/>
+  </facilities>
+  <products productSummaryId="PS_1" serialNumber="P_Camera_0" price="499.99 EUR" componentCount="2" recycledComponentCount="2"/>
+  <products productSummaryId="PS_2" serialNumber="P_Camera_1" price="499.99 EUR" componentCount="2"/>
+  <products productSummaryId="PS_3" serialNumber="P_Printer_0" price="129.99 EUR" componentCount="2"/>
+  <products productSummaryId="PS_4" serialNumber="P_Laptop_0" price="1099.0 EUR" componentCount="4"/>
+  <products productSummaryId="PS_5" serialNumber="P_Bike_0" price="899.0 EUR" componentCount="3"/>
+  <products productSummaryId="PS_6" serialNumber="P_MobilePhone_0" price="799.0 EUR" componentCount="3"/>
+</sustainabilityReport:Report>

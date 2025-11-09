@@ -1,0 +1,41 @@
+@namespace(uri="http://www.example.org/sustainabilityReport", prefix="sustainabilityReport")
+package sustainabilityReport;
+
+class Report {
+  attr String[1]          name;
+  attr String[1]          generatedOn;
+  attr String[1]          version;
+  attr float[1]           totalCO2;
+  val  FacilityReport[*]  facilities;
+  val  ProductSummary[*]  products;
+}
+
+class FacilityReport {
+  attr String[1]       facilityReportId;
+  attr String[1]       facilityName;
+  attr float[1]        co2;
+  attr float[1]        energySavedKWh;
+  attr float[1]        waterSavedL;
+  attr int[1]          shipmentsTotal;
+  attr int[1]          shipmentsDelivered;
+  attr int[1]          shipmentsNotDelivered;
+  val  GoalResult[*]   goals;
+}
+
+class GoalResult {
+  attr String[1]         goalName;
+  attr float[1]          standard;
+  attr String[1]         comparator;
+  attr float[1]          actual;
+  attr boolean[1]        isCompliant;
+}
+
+// --- Product-level summary ---
+class ProductSummary {
+  attr String[1]    productSummaryId;
+  attr String[1]    serialNumber;
+  attr String[1]    price;
+  attr int[1]       componentCount;
+  attr int[?]       recycledComponentCount;
+}
+

@@ -1,0 +1,47 @@
+@namespace(uri="http://www.example.org/circularFlowTrace", prefix="trace")
+package trace;
+
+class TraceDocument {
+    attr String[1] name;
+    val  FlowRecord[*] flowRecords;
+    val  Summary[1]    summary;
+}
+
+class Summary {
+    attr int[1] repairCount;
+    attr int[1] refurbishCount;
+    attr int[1] recycleCount;
+}
+
+class FlowRecord {
+    attr String[1] ~id;
+    attr String[?] reason;
+    val  ProcessTrace[1] process;
+    val  ParticipantReference[*] participants;
+}
+
+abstract class ProcessTrace {
+    attr String[1] facilityName;
+    attr float[1]  energySaved;
+    attr float[1]  waterSaved;
+    attr boolean[1] delivered;
+    attr String[1] label;
+}
+
+class RepairTrace     extends ProcessTrace { }
+class RefurbishTrace  extends ProcessTrace { }
+class RecycleTrace    extends ProcessTrace { 
+    val  ComponentTrace[*]      components;
+}
+
+class ParticipantReference {
+    attr String[1] name;
+    attr String[1] type;   // Manufacturer | Retailer | Consumer | Facility
+}
+
+class ComponentTrace {
+    attr String[1] componentId;
+    attr String[1] componentName;
+    attr boolean[1] recycled;
+    attr String[1] stateLabel;
+}

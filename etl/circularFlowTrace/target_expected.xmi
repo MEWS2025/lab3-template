@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<trace:TraceDocument xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:trace="http://www.example.org/circularFlowTrace" xsi:schemaLocation="http://www.example.org/circularFlowTrace target.emf" name="ViennaCircularEconomy_FlowTrace">
+  <flowRecords id="RO1C1_C1_P_Camera_0" reason="Reason: Product reached end of service life and is returned for component recovery.">
+    <process xsi:type="trace:RecycleTrace" facilityName="ViennaElectronicsRecycleFacility" energySaved="12.5" waterSaved="250.0" delivered="true" label="RECYCLE @ ViennaElectronicsRecycleFacility [2 recycled, 0 reused]">
+      <components componentName="Camera Lens" recycled="true" stateLabel="State: ready"/>
+      <components componentName="Memory Card" recycled="true" stateLabel="State: ready"/>
+    </process>
+    <participants name="C1" type="Consumer"/>
+    <participants name="MediaMarkt" type="Retailer"/>
+    <participants name="AlpineOpticsAG" type="Manufacturer"/>
+    <participants name="ViennaElectronicsRecycleFacility" type="Facility"/>
+  </flowRecords>
+  <flowRecords id="RO1C3_C3_P_Bike_0" reason="Reason: Returned for technical repair and performance restoration.">
+    <process xsi:type="trace:RepairTrace" facilityName="StadtWienBikeRepairShop" energySaved="25.0" waterSaved="500.0" delivered="true" label="REPAIR @ StadtWienBikeRepairShop"/>
+    <participants name="C3" type="Consumer"/>
+    <participants name="AnyBike" type="Retailer"/>
+    <participants name="CityCycleAG" type="Manufacturer"/>
+    <participants name="StadtWienBikeRepairShop" type="Facility"/>
+  </flowRecords>
+  <flowRecords id="RO1C4_C4_P_Camera_1" reason="Reason not provided.">
+    <process xsi:type="trace:RecycleTrace" facilityName="ViennaElectronicsRecycleFacility" energySaved="12.5" waterSaved="250.0" label="RECYCLE @ ViennaElectronicsRecycleFacility [0 recycled, 2 reused]">
+      <components componentName="Camera Lens" stateLabel="State: in circular process"/>
+      <components componentName="Memory Card" stateLabel="State: in circular process"/>
+    </process>
+    <participants name="C4" type="Consumer"/>
+    <participants name="MediaMarkt" type="Retailer"/>
+    <participants name="AlpineOpticsAG" type="Manufacturer"/>
+    <participants name="ViennaElectronicsRecycleFacility" type="Facility"/>
+  </flowRecords>
+  <flowRecords id="RO2C4_C4_P_MobilePhone_0" reason="Reason: Returned for functional inspection and quality refurbishment to extend its lifecycle.">
+    <process xsi:type="trace:RefurbishTrace" facilityName="ViennaRefurbishmentCenter" energySaved="18.75" waterSaved="260.0" delivered="true" label="REFURBISH @ ViennaRefurbishmentCenter"/>
+    <participants name="C4" type="Consumer"/>
+    <participants name="MediaMarkt" type="Retailer"/>
+    <participants name="MobileTechGmbH" type="Manufacturer"/>
+    <participants name="ViennaRefurbishmentCenter" type="Facility"/>
+  </flowRecords>
+  <summary repairCount="1" refurbishCount="1" recycleCount="2"/>
+</trace:TraceDocument>

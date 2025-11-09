@@ -1,0 +1,119 @@
+<?nsuri http://www.example.org/circularEconomy?>
+<circulareconomy name="ViennaCircularEconomy">
+
+  <!-- Retailers -->
+  <retailer name="MediaMarkt"/>
+  <retailer name="Saturn"/>
+  <retailer name="AnyBike"/>
+
+  <!-- Manufacturers (with contained Components) -->
+  <manufacturer name="AlpineOpticsAG">
+    <component id="C_CameraLens_0" componentName="Camera Lens" recycled="true"  componentState="READY"/>
+    <component id="C_CameraLens_1" componentName="Camera Lens" recycled="false" componentState="IN_CIRCULAR_PROCESS"/>
+    <component id="C_MemoryCard_0" componentName="Memory Card" recycled="true"  componentState="READY"/>
+    <component id="C_MemoryCard_1" componentName="Memory Card" recycled="false" componentState="IN_CIRCULAR_PROCESS"/>
+  </manufacturer>
+
+  <manufacturer name="DanubeDevicesGmbH">
+    <component id="C_CPU_0"           componentName="CPU"            recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_OLEDDisplay_0"   componentName="OLED Display"   recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_Keyboard_0"      componentName="Keyboard"       recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_InkCartridge_0"  componentName="Ink Cartridge"  recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_PaperTray_0"     componentName="Paper Tray"     recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_Battery_0"       componentName="Battery"        recycled="false" componentState="ASSEMBLED"/>
+  </manufacturer>
+
+  <manufacturer name="CityCycleAG">
+    <component id="C_BikeFrame_0"   componentName="Bike Frame"   recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_BikeWheels_0"  componentName="Bike Wheels"  recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_BikeGears_0"   componentName="Bike Gears"   recycled="false" componentState="ASSEMBLED"/>
+  </manufacturer>
+
+  <manufacturer name="MobileTechGmbH">
+    <component id="C_MobileCPU_0"           componentName="Mobile CPU"           recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_MobileOLEDDisplay_0"   componentName="Mobile OLED Display"  recycled="false" componentState="ASSEMBLED"/>
+    <component id="C_MobilePhoneBattery_0"  componentName="Mobile Phone Battery" recycled="false" componentState="ASSEMBLED"/>
+  </manufacturer>
+
+  <!-- Sustainability Goals -->
+  <sustainabilitygoal name="SDG_EnergySaved" description="Minimum energy saved"  standard="30"  comparator="MIN"/>
+  <sustainabilitygoal name="SDG_WaterSaved"  description="Minimum water saved"   standard="300" comparator="MIN"/>
+  <sustainabilitygoal name="SDG_CO2Emission" description="Maximum CO2 Emission"  standard="150" comparator="MAX"/>
+
+  <!-- Facilities (with references to goals) -->
+  <facility name="ViennaElectronicsRecycleFacility" type="RECYCLE" goals="SDG_EnergySaved, SDG_CO2Emission" />
+
+  <facility name="StadtWienBikeRepairShop" type="REPAIR" goals="SDG_WaterSaved, SDG_CO2Emission" />
+
+  <facility name="ViennaRefurbishmentCenter" type="REFURBISH" goals="SDG_EnergySaved, SDG_WaterSaved, SDG_CO2Emission" />
+
+<!-- Products -->
+<product serialNumber="P_Camera_0" productName="Camera" price="499.99"
+         assemblyDate="2022-01-10" retailer="MediaMarkt"
+         components="C_CameraLens_0, C_MemoryCard_0"/>
+
+<!-- P_Camera_1 -->
+<product serialNumber="P_Camera_1" productName="Camera" price="499.99"
+         assemblyDate="2022-01-14" retailer="MediaMarkt"
+         components="C_CameraLens_1, C_MemoryCard_1"/>
+         
+<product serialNumber="P_Printer_0" productName="Printer" price="129.99" assemblyDate="2022-01-27" retailer="Saturn" components="C_InkCartridge_0, C_PaperTray_0"/>
+
+<!-- P_Laptop_0 -->
+<product serialNumber="P_Laptop_0" productName="Laptop" price="1099.00"
+         assemblyDate="2022-02-13" retailer="Saturn"
+         components="C_CPU_0, C_OLEDDisplay_0, C_Keyboard_0, C_Battery_0"/>
+
+<!-- P_Bike_0 -->
+<product serialNumber="P_Bike_0" productName="Bike" price="899.00"
+         assemblyDate="2022-02-01" retailer="AnyBike"
+         components="C_BikeFrame_0, C_BikeWheels_0, C_BikeGears_0"/>
+
+<!-- P_MobilePhone_0 -->
+<product serialNumber="P_MobilePhone_0" productName="Mobile Phone" price="799.00"
+         assemblyDate="2022-03-17" retailer="MediaMarkt"
+         components="C_MobileCPU_0, C_MobileOLEDDisplay_0, C_MobilePhoneBattery_0"/>
+
+
+  <!-- Consumers (with Orders and Returns) -->
+  <consumer name="C1">
+    <order id="O1C1" product="P_Camera_0" date="2022-05-15"/>
+    <return id="RO1C1" order="O1C1" reason="Product reached end of service life and is returned for component recovery.">
+      <recycleprocess components="C_CameraLens_0, C_MemoryCard_0" facility="ViennaElectronicsRecycleFacility" energySavedKWh="12.50" waterSavedL="250.00">
+        <shipment id="RecycShipment_RO1C1" delivered="true" deliveryDate="2025-10-01" co2Emission="14.50" destination="AlpineOpticsAG"/>
+      </recycleprocess>
+    </return>
+  </consumer>
+
+  <consumer name="C2">
+    <order id="O1C2" product="P_Laptop_0"  date="2023-03-02"/>
+    <order id="O2C2" product="P_Printer_0" date="2023-05-17"/>
+  </consumer>
+
+  <consumer name="C3">
+    <order id="O1C3" product="P_Bike_0" date="2023-07-04"/>
+    <return id="RO1C3" order="O1C3" reason="Returned for technical repair and performance restoration.">
+      <repairprocess facility="StadtWienBikeRepairShop" energySavedKWh="25.00" waterSavedL="500.00">
+        <shipment id="RepShipment_RO1C3" delivered="true" deliveryDate="2025-09-21" co2Emission="22.0" destination="CityCycleAG"/>
+      </repairprocess>
+    </return>
+  </consumer>
+
+  <consumer name="C4">
+    <order id="O1C4" product="P_Camera_1"     date="2022-05-17"/>
+    <order id="O2C4" product="P_MobilePhone_0" date="2022-07-07"/>
+
+    <return id="RO1C4" order="O1C4" reason="Product reached end of service life and is returned for component recovery.">
+      <recycleprocess facility="ViennaElectronicsRecycleFacility" energySavedKWh="12.50" waterSavedL="250.00" components="C_CameraLens_1, C_MemoryCard_1">
+        <shipment id="RecycShipment_RO1C4" delivered="false" deliveryDate="2025-11-25" co2Emission="14.50" destination="AlpineOpticsAG"/>
+      </recycleprocess>
+    </return>
+
+    <return id="RO2C4" order="O2C4" reason="Returned for functional inspection and quality refurbishment to extend its lifecycle.">
+      <refurbishprocess facility="ViennaRefurbishmentCenter" energySavedKWh="18.75" waterSavedL="260.00">
+        <shipment id="RefurbShipment_RO2C4" delivered="true" deliveryDate="2025-06-18" co2Emission="12.0" destination="MobileTechGmbH"/>
+      </refurbishprocess>
+    </return>
+  </consumer>
+
+</circulareconomy>

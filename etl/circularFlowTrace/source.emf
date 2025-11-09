@@ -1,0 +1,99 @@
+@namespace(uri="http://www.example.org/circularEconomy", prefix="circularEconomy")
+package circularEconomy;
+
+// --- Enums ---
+enum Comparator { MIN=0; MAX=1; }
+enum FacilityType { REPAIR=0; REFURBISH=1; RECYCLE=2; }
+enum ComponentState { READY=0; ASSEMBLED=1; IN_CIRCULAR_PROCESS=2; }
+
+
+// --- Root container ---
+class CircularEconomy {
+  attr String[1]              name;
+  val  Manufacturer[*]        manufacturers;
+  val  Retailer[*]            retailers;
+  val  Consumer[*]            consumers;
+  val  SustainabilityGoal[*]  sustainabilityGoals;
+  val  Facility[*]            facilities;
+  val  Product[*]             products;
+}
+
+abstract class Actor {
+  attr String[1] name;
+}
+
+class Manufacturer extends Actor {
+  val Component[*] components;
+}
+
+class Retailer extends Actor { }
+
+class Consumer extends Actor {
+  val Order[*]  orders;
+  val Return[*] returns;
+}
+
+class SustainabilityGoal {
+  attr String[1]     name;
+  attr String[0..1]  description;
+  attr float[1]      standard;
+  attr Comparator[1] comparator;
+}
+
+class Facility {
+  attr String[1]       name;
+  attr FacilityType[1] type;
+  ref  SustainabilityGoal[*] goals;
+}
+
+class Product {
+  id attr String[1] serialNumber;
+  attr String[1] productName;
+  attr float[1]  price;
+  attr Date[1]   assemblyDate;
+  ref  Retailer[1] retailer;
+  ref  Component[1..*] components;
+}
+
+class Order {
+  id attr String[1] ~id;
+  attr Date[1]   date;
+  ref  Product[1] product;
+}
+
+class Component {
+  id attr String[1] ~id;
+  attr String[1] componentName;
+  attr boolean[1] recycled;
+  attr ComponentState[1] componentState;
+}
+
+class Return {
+  id attr String[1] ~id;
+  attr String[?] reason;
+  ref  Order[1]          order;
+  val  CircularProcess[1] circularProcess;
+}
+
+class Shipment {
+  id attr String[1]  ~id;
+  attr boolean[1] delivered;
+  attr Date[1]    deliveryDate;
+  attr float[1]   co2Emission;
+  ref  Actor[1] destination;
+}
+
+abstract class CircularProcess {
+  ref  Facility[1] facility;
+  val  Shipment[0..1] shipment;
+  attr float[1] energySavedKWh;
+  attr float[1] waterSavedL;
+}
+
+class RepairProcess extends CircularProcess { }
+class RefurbishProcess extends CircularProcess { }
+
+class RecycleProcess extends CircularProcess {
+  ref Component[*] components;
+}
+
