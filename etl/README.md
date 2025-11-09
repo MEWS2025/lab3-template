@@ -78,7 +78,7 @@ To run a scenario, navigate into either `circularFlowTrace/` or `sustainabilityR
 # install dependencies
 mvn install
 
-# compile and execution transformation
+# compile and execute transformation
 mvn compile exec:java
 ```
 
