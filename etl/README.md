@@ -43,10 +43,25 @@ After executing your transformation, a `target.xmi` file is produced. You can co
 
 This scenario focuses on producing a traceability document describing circular processes triggered by product returns. The transformation extracts returns, processes, shipment data, participants, and component details. It also aggregates global counts into a summary section. The task requires mapping hierarchical structures, handling optional data, and generating human-readable labels.
 
+| Source Concept | Target Concept | Description |
+| --- | --- | --- |
+| `CircularEconomy` | `TraceDocument` + `Summary` | The trace document inherits the source `name` and appends the “_FlowTrace” suffix. The contained summary aggregates global counts of repair, refurbish, and recycle processes by counting the occurrences of each process type across the model. |
+| `Return` | `FlowRecord` | Each return produces one flow record with an identifier (`id`) derived from the return id, the consumer’s name, and the product’s serial number. The record copies the return reason or inserts a default placeholder if it is absent. The flow record includes the corresponding circular process and collects participant references for the consumer, retailer, manufacturer, and facility involved. |
+| `CircularProcess` (`RepairProcess`, `RefurbishProcess`, `RecycleProcess`) | `ProcessTrace` (`RepairTrace`, `RefurbishTrace`, `RecycleTrace`) | Each process contributes a corresponding process trace. They share  attributes such as `facilityName`, `energySaved`, `waterSaved`, and  `delivered`. Specialized traces introduce process-specific labels. Recycle traces additionally collect component traces and compute counts of recycled vs. nonRecycled components for the label. |
+| `Component` | `ComponentTrace` | Each component referenced by a recycle process is transformed into a component trace. The trace records the `componentId`, `componentName`, and `recycled` flag. The component state is expressed as a formatted string that normalises the enumeration. |
+| `Actor` (`Consumer`, `Retailer`, `Manufacturer`) and `Facility` | `ParticipantReference` | Each participant is represented by a participant reference containing the entity’s `name` and a `type` tag indicating whether it is a consumer, retailer, manufacturer, or facility. |
+
 
 ### 4.2 Sustainability Report
 
 The second scenario aggregates sustainability-related indicators per facility and per product. Processes, shipments, and sustainability goals must be analysed to compute facility-level metrics, evaluate compliance, and summarise product characteristics. The transformation involves numerical aggregation, conditional evaluation, and ID generation.
+
+| Source Concept | Target Concept | Description |
+| --- | --- | --- |
+| `CircularEconomy` | `Report` | The report inherits the source name, assigns a timestamp to `generatedOn` (using the current date), and sets a fixed `version` value (“v1.0”). The attribute `totalCO2` is computed by summing the `co2Emission` values of all shipments (including not shipped) in the model. |
+| `Facility` | `FacilityReport` | Each facility produces one facility report identified by a generated and auto-incremented `facilityReportId`. The `facilityName` combines the facility’s name and type. All circular processes referencing the facility contribute to aggregated metrics: total CO₂ emissions from associated shipments (`co2`), total energy saved (`energySavedKWh`), and total water saved (`waterSavedL`). In addition shipment counts (total, delivered, not delivered) are computed. |
+| `SustainabilityGoal` | `GoalResult` | For each goal referenced by a facility, a goal result is created. It records the goal’s `name`, `standard`, and `comparator`. The `actual` value is derived by selecting the relevant aggregated metric (energy, water, or CO₂) based on the goal’s naming convention. Compliance is evaluated by applying the semantic of the comparator (`MIN` or `MAX`) to the `standard` and the computed `actual` value. |
+| `Product` | `ProductSummary` | Each product yields a summary containing a generated and auto-incremented `productSummaryId`, the product’s `serialNumber`, `price` expressed as a string with a currency suffix. In addition the number of associated components is recorded (`componentCount`) and how many are recycled (`recycledComponentCount`). |
 
 
 ## 5. How to Approach the Assignment
