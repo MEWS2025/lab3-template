@@ -2,8 +2,8 @@
 <trace:TraceDocument xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:trace="http://www.example.org/circularFlowTrace" xsi:schemaLocation="http://www.example.org/circularFlowTrace target.emf" name="ViennaCircularEconomy_FlowTrace">
   <flowRecords id="RO1C1_C1_P_Camera_0" reason="Reason: Product reached end of service life and is returned for component recovery.">
     <process xsi:type="trace:RecycleTrace" facilityName="ViennaElectronicsRecycleFacility" energySaved="12.5" waterSaved="250.0" delivered="true" label="RECYCLE @ ViennaElectronicsRecycleFacility [2 recycled, 0 nonRecycled]">
-      <components componentName="Camera Lens" recycled="true" stateLabel="State: ready"/>
-      <components componentName="Memory Card" recycled="true" stateLabel="State: ready"/>
+      <components componentId="C_CameraLens_0" componentName="Camera Lens" recycled="true" stateLabel="State: ready"/>
+      <components componentId="C_MemoryCard_0" componentName="Memory Card" recycled="true" stateLabel="State: ready"/>
     </process>
     <participants name="C1" type="Consumer"/>
     <participants name="MediaMarkt" type="Retailer"/>
@@ -19,8 +19,8 @@
   </flowRecords>
   <flowRecords id="RO1C4_C4_P_Camera_1" reason="Reason not provided.">
     <process xsi:type="trace:RecycleTrace" facilityName="ViennaElectronicsRecycleFacility" energySaved="12.5" waterSaved="250.0" label="RECYCLE @ ViennaElectronicsRecycleFacility [0 recycled, 2 nonRecycled]">
-      <components componentName="Camera Lens" stateLabel="State: in circular process"/>
-      <components componentName="Memory Card" stateLabel="State: in circular process"/>
+      <components componentId="C_CameraLens_1" componentName="Camera Lens" stateLabel="State: in circular process"/>
+      <components componentId="C_MemoryCard_1" componentName="Memory Card" stateLabel="State: in circular process"/>
     </process>
     <participants name="C4" type="Consumer"/>
     <participants name="MediaMarkt" type="Retailer"/>
