@@ -8,49 +8,77 @@ class C1 as ":Component\nidentifier = C-301\nname = Motor\nrecycled = false\nlif
 }
 class C2 as ":Component\nidentifier = C-300\nname = Gearbox\nrecycled = true\nlifecycleState = IN_LOOP\n" {
 }
-class C3 as ":Customer\nname = Bob\nloyaltyTier = BASIC\n" {
+class C3 as ":Customer\nname = Alice\nloyaltyTier = PREMIUM\n" {
 }
-class C4 as ":Customer\nname = Alice\nloyaltyTier = PREMIUM\n" {
+class C4 as ":Customer\nname = Bob\nloyaltyTier = BASIC\n" {
 }
-class C5 as ":DistributionPartner\nname = RetailerOne\nomniChannel = true\n" {
+class C5 as ":DistributionPartner\nname = RetailerOne\nomniChannel = false\n" {
 }
-class C6 as ":Facility\nname = RepairHubA\noperationalSince = 10-12-1999\n" {
+class C6 as ":Facility\nname = RecycleCenter1\noperationalSince = 10-12-1999\n" {
 }
-class C7 as ":Facility\nname = RecycleCenter1\noperationalSince = 10-12-1999\n" {
+class C7 as ":Facility\nname = RepairHubA\noperationalSince = 10-12-1999\n" {
 }
-class C8 as ":FacilityProfile\ncategory = REPAIR\nmaxThroughputPerMonth = 10\n" {
+class C8 as ":Facility\nname = RefurbWien\noperationalSince = 10-12-1999\n" {
 }
-class C9 as ":FacilityProfile\ncategory = REPAIR\nmaxThroughputPerMonth = 10\n" {
+class C9 as ":Producer\nname = AcmeCorp\nproductionCapacity = 0.0\n" {
 }
-class C10 as ":Producer\nname = AcmeCorp\nproductionCapacity = 0.0\n" {
+class C10 as ":Product\nid = P-300\nname = Gadget\nbasePrice = 149.99\nassemblyDate = Wed Nov 20 00:00:00 CET 2024\n" {
 }
-class C11 as ":Product\nid = P-300\nname = Gadget\nbasePrice = 149.99\nassemblyDate = Wed Nov 20 00:00:00 CET 2024\n" {
+class C11 as ":Purchase\nid = Alice-O1\ndate = Sun Nov 30 00:00:00 CET 2025\n" {
 }
-class C12 as ":PurchaseOrder\nid = Alice-O1\ndate = Sun Nov 30 00:00:00 CET 2025\n" {
+class C12 as ":PurchaseEvent\neventId = 2\ndate = Sun Nov 30 00:00:00 CET 2025\ndelivered = false\ndeliveryDate = Sun Nov 30 00:00:00 CET 2025\n" {
 }
-class C13 as ":SustainabilityMetric\nname = ImproveReuse\ndescription = Increase reuse rate\nthreshold = 20.0\ncomparator = MAX\nunit = wpm\n" {
+class C13 as ":RecycleProcess\nenergySavedKWh = 65.0\nwaterSavedL = 845.0\n" {
 }
-class C14 as ":SustainabilityMetric\nname = ReduceWaste\ndescription = Minimise waste in process\nthreshold = 10.0\ncomparator = MIN\nunit = ppm\n" {
+class C14 as ":RefurbishProcess\nenergySavedKWh = 65.0\nwaterSavedL = 845.0\n" {
 }
-C0 --> C10 : actors
-C10 --> C2 : components
-C10 --> C1 : components
+class C15 as ":RepairProcess\nenergySavedKWh = 65.0\nwaterSavedL = 845.0\n" {
+}
+class C16 as ":ReturnEvent\neventId = 3\nreason = Bad Quality\ntype = REPAIR\n" {
+}
+class C17 as ":ReturnOrder\nid = Alice-R1\ndate = Sat Dec 06 00:00:00 CET 2025\nreason = Bad Quality\n" {
+}
+class C18 as ":ShipmentEvent\neventId = 4\ndate = Sat Dec 06 00:00:00 CET 2025\ndelivered = false\ndeliveryDate = Sat Dec 06 00:00:00 CET 2025\nname = A-R0-REC\nshipmentType = AIR\nco2Emissions = 20.0\n" {
+}
+class C19 as ":ShipmentEvent\neventId = 5\ndate = Sat Dec 06 00:00:00 CET 2025\ndelivered = false\ndeliveryDate = Sat Dec 06 00:00:00 CET 2025\nname = A-R0-REF\nshipmentType = AIR\nco2Emissions = 20.0\n" {
+}
+class C20 as ":ShipmentEvent\neventId = 6\ndate = Sat Dec 06 00:00:00 CET 2025\ndelivered = false\ndeliveryDate = Sat Dec 06 00:00:00 CET 2025\nname = A-R0-REP\nshipmentType = AIR\nco2Emissions = 20.0\n" {
+}
+class C21 as ":SustainabilityMetric\nname = ImproveReuse\ndescription = Increase reuse rate\nthreshold = 20.0\ncomparator = MAX\nunit = wpm\n" {
+}
+class C22 as ":SustainabilityMetric\nname = ReduceWaste\ndescription = Minimise waste in process\nthreshold = 10.0\ncomparator = MIN\nunit = ppm\n" {
+}
+C0 --> C9 : actors
+C9 --> C2 : components
+C9 --> C1 : components
 C0 --> C5 : actors
-C0 --> C4 : actors
-C4 --> C12 : orders
 C0 --> C3 : actors
-C0 --> C14 : metrics
-C0 --> C13 : metrics
-C0 --> C7 : facilities
-C7 --> C9 : profile
+C3 --> C11 : orders
+C11 --> C12 : event
+C3 --> C17 : returns
+C17 --> C16 : event
+C17 --> C13 : circularProcesses
+C13 --> C18 : shipmentEvent
+C17 --> C14 : circularProcesses
+C14 --> C19 : shipmentEvent
+C17 --> C15 : circularProcesses
+C15 --> C20 : shipmentEvent
+C0 --> C4 : actors
+C0 --> C22 : metrics
+C0 --> C21 : metrics
 C0 --> C6 : facilities
-C6 --> C8 : profile
-C0 --> C11 : products
-C6 ..> C13 : metrics
-C12 ..> C11 : product
-C7 ..> C14 : metrics
-C7 ..> C13 : metrics
-C11 ..> C5 : retailer
-C11 ..> C2 : parts
-C11 ..> C1 : parts
+C0 --> C8 : facilities
+C0 --> C7 : facilities
+C0 --> C10 : products
+C14 ..> C8 : facility
+C17 ..> C11 : order
+C6 ..> C22 : metrics
+C6 ..> C21 : metrics
+C10 ..> C5 : retailer
+C10 ..> C2 : parts
+C10 ..> C1 : parts
+C7 ..> C21 : metrics
+C8 ..> C21 : metrics
+C11 ..> C10 : product
+C13 ..> C6 : facility
 @enduml

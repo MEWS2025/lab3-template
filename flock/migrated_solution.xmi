@@ -4,18 +4,29 @@
     <components identifier="C-300" name="Gearbox" recycled="true" lifecycleState="IN_LOOP"/>
     <components identifier="C-301" name="Motor" lifecycleState="ASSEMBLED"/>
   </actors>
-  <actors xsi:type="DistributionPartner" name="RetailerOne" omniChannel="true"/>
+  <actors xsi:type="DistributionPartner" name="RetailerOne"/>
   <actors xsi:type="Customer" name="Alice" loyaltyTier="PREMIUM">
-    <orders id="Alice-O1" date="2025-11-30T00:00:00.000+0100" product="P-300"/>
+    <orders xsi:type="Purchase" id="Alice-O1" date="2025-11-30T00:00:00.000+0100" product="P-300">
+      <event xsi:type="PurchaseEvent" eventId="2" date="2025-11-30T00:00:00.000+0100" deliveryDate="2025-11-30T00:00:00.000+0100"/>
+    </orders>
+    <returns id="Alice-R1" date="2025-12-06T00:00:00.000+0100" reason="Bad Quality" order="Alice-O1">
+      <event xsi:type="ReturnEvent" eventId="3" reason="Bad Quality"/>
+      <circularProcesses xsi:type="RecycleProcess" facility="//@facilities.0" energySavedKWh="65.0" waterSavedL="845.0">
+        <shipmentEvent eventId="4" date="2025-12-06T00:00:00.000+0100" deliveryDate="2025-12-06T00:00:00.000+0100" name="A-R0-REC" co2Emissions="20.0"/>
+      </circularProcesses>
+      <circularProcesses xsi:type="RefurbishProcess" facility="//@facilities.1" energySavedKWh="65.0" waterSavedL="845.0">
+        <shipmentEvent eventId="5" date="2025-12-06T00:00:00.000+0100" deliveryDate="2025-12-06T00:00:00.000+0100" name="A-R0-REF" co2Emissions="20.0"/>
+      </circularProcesses>
+      <circularProcesses xsi:type="RepairProcess" energySavedKWh="65.0" waterSavedL="845.0">
+        <shipmentEvent eventId="6" date="2025-12-06T00:00:00.000+0100" deliveryDate="2025-12-06T00:00:00.000+0100" name="A-R0-REP" co2Emissions="20.0"/>
+      </circularProcesses>
+    </returns>
   </actors>
   <actors xsi:type="Customer" name="Bob"/>
   <metrics name="ReduceWaste" description="Minimise waste in process" threshold="10.0" unit="ppm"/>
   <metrics name="ImproveReuse" description="Increase reuse rate" threshold="20.0" comparator="MAX" unit="wpm"/>
-  <facilities name="RecycleCenter1" metrics="//@metrics.0 //@metrics.1" operationalSince="10-12-1999">
-    <profile maxThroughputPerMonth="10"/>
-  </facilities>
-  <facilities name="RepairHubA" metrics="//@metrics.1" operationalSince="10-12-1999">
-    <profile maxThroughputPerMonth="10"/>
-  </facilities>
+  <facilities name="RecycleCenter1" metrics="//@metrics.0 //@metrics.1" operationalSince="10-12-1999"/>
+  <facilities name="RefurbWien" metrics="//@metrics.1" operationalSince="10-12-1999"/>
+  <facilities name="RepairHubA" metrics="//@metrics.1" operationalSince="10-12-1999"/>
   <products id="P-300" name="Gadget" basePrice="149.99" assemblyDate="2024-11-20T00:00:00.000+0100" retailer="//@actors.1" parts="C-300 C-301"/>
 </CircularEconomyNetwork>
