@@ -11,13 +11,13 @@
     </orders>
     <returns id="Alice-R1" date="2025-12-06T00:00:00.000+0100" reason="Bad Quality" order="Alice-O1">
       <event xsi:type="ReturnEvent" eventId="3" reason="Bad Quality"/>
-      <circularProcesses xsi:type="RecycleProcess" facility="//@facilities.0" energySavedKWh="65.0" waterSavedL="845.0">
+      <circularProcesses xsi:type="RecycleProcess" facility="//@facilities.0" energySavedKWh="65.0" waterSavedL="845.0" components="C-300 C-301">
         <shipmentEvent eventId="4" date="2025-12-06T00:00:00.000+0100" deliveryDate="2025-12-06T00:00:00.000+0100" name="A-R0-REC" co2Emissions="20.0"/>
       </circularProcesses>
       <circularProcesses xsi:type="RefurbishProcess" facility="//@facilities.1" energySavedKWh="65.0" waterSavedL="845.0">
         <shipmentEvent eventId="5" date="2025-12-06T00:00:00.000+0100" deliveryDate="2025-12-06T00:00:00.000+0100" name="A-R0-REF" co2Emissions="20.0"/>
       </circularProcesses>
-      <circularProcesses xsi:type="RepairProcess" energySavedKWh="65.0" waterSavedL="845.0">
+      <circularProcesses xsi:type="RepairProcess" facility="//@facilities.2" energySavedKWh="65.0" waterSavedL="845.0">
         <shipmentEvent eventId="6" date="2025-12-06T00:00:00.000+0100" deliveryDate="2025-12-06T00:00:00.000+0100" name="A-R0-REP" co2Emissions="20.0"/>
       </circularProcesses>
     </returns>
@@ -25,8 +25,14 @@
   <actors xsi:type="Customer" name="Bob"/>
   <metrics name="ReduceWaste" description="Minimise waste in process" threshold="10.0" unit="ppm"/>
   <metrics name="ImproveReuse" description="Increase reuse rate" threshold="20.0" comparator="MAX" unit="wpm"/>
-  <facilities name="RecycleCenter1" metrics="//@metrics.0 //@metrics.1" operationalSince="10-12-1999"/>
-  <facilities name="RefurbWien" metrics="//@metrics.1" operationalSince="10-12-1999"/>
-  <facilities name="RepairHubA" metrics="//@metrics.1" operationalSince="10-12-1999"/>
+  <facilities name="RecycleCenter1" metrics="//@metrics.0 //@metrics.1" operationalSince="10-12-1999">
+    <profile waterSaved="845.0" energySaved="65.0" co2Emissions="35.0"/>
+  </facilities>
+  <facilities name="RefurbWien" metrics="//@metrics.1" operationalSince="10-12-1999">
+    <profile waterSaved="845.0" energySaved="65.0" co2Emissions="35.0"/>
+  </facilities>
+  <facilities name="RepairHubA" metrics="//@metrics.1" operationalSince="10-12-1999">
+    <profile waterSaved="845.0" energySaved="65.0" co2Emissions="35.0"/>
+  </facilities>
   <products id="P-300" name="Gadget" basePrice="149.99" assemblyDate="2024-11-20T00:00:00.000+0100" retailer="//@actors.1" parts="C-300 C-301"/>
 </CircularEconomyNetwork>

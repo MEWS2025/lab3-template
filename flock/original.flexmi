@@ -21,21 +21,21 @@
     <component id="C-301" componentName="Motor"   recycled="false" componentState="ASSEMBLED"/>
   </manufacturer>
 
-  <product id="P-300" productName="Gadget" price="149.99" assemblyDate="2024-11-20" component="C-300, C-301" retailer="RetailerOne"/>
+  <product id="P-300" productName="Gadget" price="149.99" assemblyDate="2024-11-20" components="C-300, C-301" retailer="RetailerOne"/>
   <retailer name="RetailerOne"/>
 
   <consumer name="Alice">
     <orders id="Alice-O1" date="2025-11-30" product="P-300"/>
     <return id="Alice-R1" date="2025-12-06" reason="Bad Quality" order="Alice-O1">
-        <recycleprocess facility="RecycleCenter1" energySavedKWh="65.0" waterSavedL="845">
-            <shipment id="A-R1-Recyc" deliveryDate="2025-12-31" delivered="false" co2Emission="35" destination="AcmeCorp" components="C-300, C-301"/>
+        <recycleprocess facility="RecycleCenter1" energySavedKWh="65.0" waterSavedL="845" components="C-300, C-301">
+            <shipment id="A-R1-Recyc" deliveryDate="2025-12-31" delivered="false" co2Emission="35" destination="AcmeCorp"/>
         </recycleprocess>
 
         <refurbishprocess facility="RefurbWien" energySavedKWh="65.0" waterSavedL="845">
             <shipment id="A-R1-Refurb" deliveryDate="2025-12-13" delivered="true" co2Emission="35" destination="RetailerOne"/>
         </refurbishprocess>
 
-        <repairprocess facility="RepairWien" energySavedKWh="65.0" waterSavedL="845">
+        <repairprocess facility="RepairHubA" energySavedKWh="65.0" waterSavedL="845">
             <shipment id="A-R1-Repair" deliveryDate="2025-12-13" delivered="true" co2Emission="35" destination="Alice"/>
         </repairprocess>
     </return>
